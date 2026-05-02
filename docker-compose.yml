@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Optional: PostgreSQL (for later stages)
+  # postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_DB: engram
+  #     POSTGRES_USER: engram
+  #     POSTGRES_PASSWORD: engram_dev_password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U engram"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+  # Engram Bot Service
+  engram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - QQ_BOT_ID=${QQ_BOT_ID}
+      - QQ_USER_IDS=${QQ_USER_IDS}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///engram.db}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./wiki:/app/wiki
+      - ./raw:/app/raw
+      - ./activities:/app/activities
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"  # API (future)
+    depends_on:
+      - postgres  # Uncomment if using PostgreSQL
+    networks:
+      - engram-network
+
+  # Optional: Redis (for caching, later stages)
+  # redis:
+  #   image: redis:7
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - engram-network
+
+volumes:
+  postgres_data:
+
+networks:
+  engram-network:
+    driver: bridge

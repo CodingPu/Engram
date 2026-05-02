@@ -1,0 +1,43 @@
+# Core
+python-dotenv==1.0.0
+pydantic==2.5.0
+click==8.1.7
+
+# LLM Integration
+anthropic==0.25.0  # Claude API
+
+# Data Processing
+pymupdf==1.23.8  # PDF handling
+markdown==3.5.1
+pyyaml==6.0.1
+
+# Task Scheduling
+APScheduler==3.10.4
+
+# Database (MVP: SQLite, later: PostgreSQL)
+sqlalchemy==2.0.23
+
+# API Framework (for SaaS phase)
+fastapi==0.109.0
+uvicorn==0.27.0
+
+# QQ Bot (OneBot 11 compatible)
+# Choose one:
+# nonebot2==2.3.0  # NapCat/Lagrange adapter
+# python-telegram-bot==20.4  # Telegram (optional)
+
+# Text-to-Speech (optional for MVP)
+# edge-tts==6.1.5  # Free TTS
+# python-sounddevice==0.4.6  # Audio playback
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Logging and Monitoring
+loguru==0.7.2
+
+# Code Quality
+black==23.12.1
+flake8==6.1.0
+mypy==1.7.1
